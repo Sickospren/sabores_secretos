@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Documentacion</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="estilos.css">
+    </head>
+    <body>
+        <nav>
+            <h1>MANUAL SABORES_SECRETOS API</h1>
+            <img src="img/pan.png" alt="" id="imagen-portada"/>
+            <h2>Índice</h2>
+            <ul>
+                <li><h3><a href="#proposito">Proposito de la api</a></h3></li>
+                <li><h3><a href="#rutas">Rutas principales</a></h3></li>
+                <li><h3><a href="#detalle">Explicacion detallada de las rutas</a></h3></li>
+                <li><h3><a href="#uso">Ejemplos de uso</a></h3></li>
+                <li><h3><a href="#seguridad">Seguridad</a></h3></li>
+            </ul>
+        </nav>
+
+        <hr>
+
+        <main>
+            <section id ="proposito">
+                <h2>Proposito de la API</h2>
+                <p>Sabores_Secretos es una api RESTful sencilla desarollada en java y hosteada en un servidor de 
+                    Payara6 que atiende peticiones HTTP para acceder a una base de datos MySQL8, estas peticiones 
+                    devolveran o consumiran un JSON con los datos de las recetas, usuarios, valoraciones, ETC.
+                </p>
+                <img src="img/API-Rest.png" alt=""/>
+                <p>Para acceder a los recursos hay 4 llamadas básicas que implementa REST.
+                    <br>Son las siguientes:</p>
+                <li>
+                        <ul>
+                            <li><b>GET:</b> Recuperar la información de un recurso.</li>
+                            <li><b>POST:</b> Crear un nuevo recurso.</li>
+                            <li><b>PUT:</b> Actualizar un recurso existente.</li>
+                            <li><b>DELETE:</b> Eliminar un recurso.</li>
+                        </ul>
+                </li>
+                
+            </section>
+
+            <hr>
+
+            <section id ="rutas">
+                <h2>Rutas principales</h2>
+                <p>Cada entidad de nuestra base de datos tiene una ruta para realizar operaciones CRUD sobre ella.Cada peticion que se realice devolvera un JSON con datos o con alguna respuesta</p>
+                <p>La ruta principal es <b>nombre_servidor/sabores_secretos/servicios</b> todas las demas rutas son continuaciones de esta</p>
+                <p><span style="color:red;">Texto en rojo</span> = path param</p>
+                <ul>
+                    <li>
+                        <a href="#usuario"><b>/usuario</b></a>
+                        <ul>
+                            <li><b>/crear</b></li>
+                            <li><b>/modificar/contrasena/<span style="color:red;">id_usuario</span>/<span style="color:red;">contraseña_nueva</span></b></li>
+                            <li><b>/modificar/correo/<span style="color:red;">id_usuario</span>/<span style="color:red;">correo_nuevo</span></b></li>
+                            <li><b>/modificar/baja/<span style="color:red;">id_usuario</span></b></li>
+                            <li><b>/modificar/habilitar/<span style="color:red;">id_usuario</span>/<span style="color:red;">contrasena</span></b></li>
+                            <li><b>/login/<span style="color:red;">nombre</span>/<span style="color:red;">contrasena</span></b></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#receta"><b>/receta</b></a>
+                        <ul>
+                            <li><b>/crear</b></li>
+                            <li><b>/listar</b></li>
+                            <li><b>/borrar/<span style="color:red;">id_receta</span></b></li>
+                            <li><b>/modificar/descripcion/<span style="color:red;">id_receta</span>/<span style="color:red;">descripcion_nueva</span></b></li>
+                            <li><b>/modificar/nombre_receta/<span style="color:red;">id_receta</span>/<span style="color:red;">nombre_nuevo</span></b></li>
+                            <li><b>/modificar/tiempo_receta/<span style="color:red;">id_receta</span>/<span style="color:red;">tiempo_receta_nuevo</span></b></li>
+                            <li><b>/modificar/numero_comensales/<span style="color:red;">id_receta</span>/<span style="color:red;">numero_comensales_nuevo</span></b></li>
+                            <li><b>/modificar/categoria/<span style="color:red;">id_receta</span>/<span style="color:red;">categoria_nueva</span></b></li>
+                            <li><b>/modificar/origen/<span style="color:red;">id_receta</span>/<span style="color:red;">origen_nuevo</span></b></li>
+                            <li><b>/modificar/privacidad/<span style="color:red;">id_receta</span>/<span style="color:red;">privacidad_nueva</span></b></li>
+                            <li><b>/modificar/imagen/<span style="color:red;">id_receta</span></b>
+                        </ul>                    
+                    </li>
+
+                    <li>
+                        <a href="#pasos"><b>/pasosReceta</b></a>
+                        <ul>
+                            <li><b>/crear</b></li>
+                            <li><b>/listar/<span style="color:red;">id_receta</span></b></li>
+                            <li><b>/modificar/<span style="color:red;">id_receta</span>/<span style="color:red;">id_paso</span>/<span style="color:red;">nuevo_paso</span></b></li>
+                            <li><b>/modificar/imagen<span style="color:red;">id_receta</span>/<span style="color:red;">id_paso</span>/<span style="color:red;">nueva_imagen</span></b></li>
+                            <li><b>/borrar/<span style="color:red;">id_receta</span>/<span style="color:red;">id_paso</span></b></li>
+                        </ul>                    
+                    </li>
+                    <li>
+                        <a href="#ingrediente"><b>/ingrediente</b></a>
+                        <ul>
+                            <li><b>/crear/<span style="color:red;">nombre</span></b></li>
+                            <li><b>/listar</b></li>
+                            <li><b>/leer/<span style="color:red;">nombre</span></b></li>
+                            <li><b>/modificar/<span style="color:red;">nuevo_nombre</span></b></li>
+                            <li><b>/borrar/<span style="color:red;">nombre</span></b></li>
+                        </ul>                    
+                    </li>
+                    <li>
+                        <a href="#cantidades"><b>/cantidades</b></a>
+                        <ul>
+                            <li><b>/crear</b></li>
+                            <li><b>/listar/<span style="color:red;">id_receta</span></b></li>
+                            <li><b>/modificar/cantidad/<span style="color:red;">nueva_cantidad</span></b></li>
+                            <li><b>/modificar/unidad/<span style="color:red;">nueva_unidad</span></b></li>
+                            <li><b>/borrar/<span style="color:red;">id_receta</span>/<span style="color:red;">id_ingrediente</span></b></li>
+                        </ul>                   
+                    </li>
+                    <li>
+                        <a href="#valoracion"><b>/valoracion</b></a>
+                        <ul>
+                            <li><b>/crear</b></li>
+                            <li><b>/listar/<span style="color:red;">id_receta</span></b></li>
+                            <li><b>/modificar/puntuacion/<span style="color:red;">nueva_puntuacion</span></b></li>
+                            <li><b>/modificar/comentario/<span style="color:red;">nuevo_comentario</span></b></li>
+                            <li><b>/borrar/<span style="color:red;">id_comentario</span></b></li>
+                        </ul>                    
+                    </li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <section id ="detalle">
+
+                <h2>Información detallada de las rutas</h2>
+                <p>Todas las llamadas devuelven un mensaje personalizado, por ejemplo, a la hora de mostar errores en la app puedes mostrar directamente los mensajes que devuelve la api. Es una buena opcion si quieres ahorrar tiempo.</p>
+
+                <p><span style="color:red;">Texto en rojo</span> = path param</p>
+
+                <ul>
+                    <li>
+                        <nav id="usuario"><a><b>/usuario</b></a></nav>
+                        <p>Estructura de datos de usuario<p/>
+                        <table border="1px">
+                            <tr>
+                                <th>Tipo de Dato</th>
+                                <th>Nombre del Dato</th>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>id_usuario</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>contrasena</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>correo_electronico</td>
+                            </tr>
+                            <tr>
+                                <td>Byte</td>
+                                <td>activo</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <ul>
+                            <li>
+                                <b>/crear</b>
+                                <p>Esta peticion tiene que llevar un objeto usuario insertado en la cabecera dentro de un JSON, una vez creado devuelve un 201 CREATED</p>
+                                <img src="img/usuario/create_usuario.PNG" alt=""/>
+                            </li>
+                            <li>
+                                <b>/modificar/contrasena/<span style="color:red;">id_usuario</span>/<span style="color:red;">contraseña_nueva</span></b>
+                            </li>
+                            <li>
+                                <b>/modificar/correo/<span style="color:red;">id_usuario</span>/<span style="color:red;">correo_nuevo</span></b>
+                                <p>Los dos metodos de modificar funcionan igual, le pasas como parametro la id_usuario que quieres modificar y luego el dato nuevo, cuando se realice devolvera un 200 OK.</p>
+                                <img src="img/usuario/mod_usuario.PNG" alt=""/>
+                            </li>
+                            <li><b>/modificar/baja/<span style="color:red;">id_usuario</span></b>
+                                <p>Con esta llamada damos de baja al usuario para que no pueda loguear mas en la aplicacion, pide como path param el nombre_usuario o correo_usuario, si todo esta en orden devuelve un 200 OK, si no encuentra el usuario devolvera un 404 not found</p>
+                                <img src="img/usuario/baja_usu.PNG" alt=""/>
+                            </li>
+                            <li><b>/modificar/habilitar/<span style="color:red;">id_usuario</span>/<span style="color:red;">contrasena</span></b>
+                                <p>Con esta llamada el usuario debera añadir sus credenciales de logueo para poder desbloquear su cuenta, pide el nombre_usuario o correo como path param, y contrasena como path param, si lo encuentra y es todo valido devuelve un 200 OK, sino un 404 not found</p>
+                                <img src="img/usuario/habilitar_usuario.PNG" alt=""/>
+                            </li>
+                            <li>
+                                <b>/login/<span style="color:red;">id_usuario</span>/<span style="color:red;">contrasena</span></b>
+                                <p>Le pasas como parametro el usuario o correo y la contraseña, si el login es corrrecto y el usuario esta activo devolvera un 200 OK sino un 404 NOT FOUND.</p>
+                                <img src="img/usuario/login.PNG" alt=""/>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <hr>
+
+                <ul>
+                    <li>
+                        <nav id="receta"><a><b>/receta</b></a></nav>
+                        <p>Estructura de datos de de la receta<p/>
+                        <table border="1px">
+                            <tr>
+                                <th>Tipo de Dato</th>
+                                <th>Nombre del Dato</th>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_receta</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>categoria</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>descripcion</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>origen</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>tiempo_preparacion</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>nombre_usuario</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>nombre_receta</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>numero_comensales</td>
+                            </tr>
+                            <tr>
+                                <td>byte</td>
+                                <td>privacidad</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>imagen</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <ul>
+                            <li>
+                                <b>/listar</b>
+                                <p>Devuelve una lista con todas las recetas</p>
+                                <img src="img/receta/listar_recetas.PNG" alt=""/>
+                            </li>
+                            <li>
+                                <b>/crear</b>
+                                <p>Esta peticion tiene que llevar un objeto receta insertado en la cabecera dentro de un JSON, una vez creado devuelve un 201 CREATED</p>
+                                <img src="img/receta/crear_receta.PNG" alt=""/>
+                            </li>
+                            <li>
+                                <b>/borrar/<span style="color:red;">id_receta</span></b>
+                                <p>Para borrar la receta debes indicar como path param la id_receta a borrar. Si se ha borrado correctamente devuelve un 200 OK, si no lo encuentra un 404 NOT FOUND</p>
+                                <img src="img/receta/borrar_receta.PNG" alt=""/>
+                            </li>
+                            <li><b>/modificar/descripcion/<span style="color:red;">id_receta</span>/<span style="color:red;">descripcion_nueva</span></b></li>
+                            <li><b>/modificar/nombre_receta/<span style="color:red;">id_receta</span>/<span style="color:red;">nombre_nuevo</span></b></li>
+                            <li><b>/modificar/tiempo_receta/<span style="color:red;">id_receta</span>/<span style="color:red;">tiempo_receta_nuevo</span></b></li>
+                            <li><b>/modificar/numero_comensales/<span style="color:red;">id_receta</span>/<span style="color:red;">numero_comensales_nuevo</span></b></li>
+                            <li><b>/modificar/categoria/<span style="color:red;">id_receta</span>/<span style="color:red;">categoria_nueva</span></b></li>
+                            <li><b>/modificar/origen/<span style="color:red;">id_receta</span>/<span style="color:red;">origen_nuevo</span></b></li>
+                            <li><b>/modificar/privacidad/<span style="color:red;">id_receta</span>/<span style="color:red;">privacidad_nueva</span></b>
+                                <p>Todos los metodos de modificar son similares, necesitan la id_receta y el dato nuevo, ambos como path, param para modificar</p>
+                                <img src="img/receta/modificar_receta.PNG" alt=""/>
+                            </li>
+                            <li><b>/modificar/imagen/<span style="color:red;">id_receta</span></b>
+                                <p>Para esta peticion hay que indicar la id_receta con un path param y la imagen en base64 debe ir dentro de un objeto receta dentro de la cabecera HTTP en formato JSON</p>
+                                <img src="img/receta/modificar_receta_img.PNG" alt=""/>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <hr>
+
+                <ul>
+                    <li>
+                        <nav id="pasos"><a><b>/pasosReceta</b></a></nav>
+                        <p>Estructura de datos de pasos receta<p/>
+                        <table border="1px">
+                            <tr>
+                                <th>Tipo de Dato</th>
+                                <th>Nombre del dato</th>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_paso</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_receta</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>numero_paso</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>descripcion</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>imagen</td>
+                            </tr>
+                        </table>
+                        <br>
+                    </li>
+                    <ul>
+                        <li><b>/crear</b>
+                            <p>Esta peticion tiene que llevar un pasoReceta insertado dentro de la cabecera en un JSON, una vez creado devuelve un 201 CREATED</p>
+                            <img src="img/pasos/pasos_crear.PNG" alt=""/>
+                        </li>
+                        <li><b>/listar/<span style="color:red;">id_receta</span></b>
+                            <p>Esta peticion te devuelve un JSON con todos los pasos de una receta en concreto</p>
+                            <img src="img/pasos/pasos_listar.PNG" alt=""/>
+                        </li>
+                        <li><b>/modificar/<span style="color:red;">id_receta</span>/<span style="color:red;">id_paso</span>/<span style="color:red;">nueva_descripcion</span></b>
+                            <p>Esta peticion necesita que le pases como path param la id_receta y la id_paso y la nueva descripcion, una vez realizados los cambios devolvera un 200 OK, si no encuentra la receta o el paso devolvera un 404 NOT FOUND</p>
+                            <img src="img/pasos/pasos_mod.PNG" alt=""/>
+                        </li>
+                        <li><b>/modificar/imagen<span style="color:red;">id_receta</span>/<span style="color:red;">id_paso</span></b>
+                            <p>Con esta peticion añadimos un /imagen antes de modificar y le indicamos id_receta, id_paso y en la cabecera un objeto pasosReceta que tiene que contener la imagen en base64, si la peticion es exitosa devuelve un 200 OK, si no lo encuentra un 404 not found</p>
+                            <img src="img/pasos/pasos_mod_imagen.PNG" alt=""/>
+                        </li>     
+                        <li><b>/borrar/<span style="color:red;">id_receta</span>/<span style="color:red;">id_paso</span></b>
+                            <p>Esta peticiond necesita la id_receta y la id_paso como path param, si el delete es exitoso devolvera un 200 OK, si no lo encuentra un 404 NOT FOUND</p>
+                            <img src="img/pasos/pasos_borrar.PNG" alt=""/>
+                        </li>
+                    </ul>    
+                </ul>
+
+                <hr>
+
+                <ul>
+                    <li>
+                        <nav id="ingrediente"><a><b>/ingrediente</b></a></nav>
+                        <p>Estructura de datos de ingrediente<p/>
+                        <table border="1px">
+                            <tr>
+                                <th>Data Type</th>
+                                <th>Variable Name</th>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_ingrediente</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>nombre</td>
+                            </tr>
+                        </table>
+                        <br>
+                    </li>
+                    <ul>
+                        <li><b>/crear/<span style="color:red;">nombre</span></b>
+                            <p>La peticion de crear ingrediente es distinta a las demas, en este caso solo le indicamos como path param el ingrediente nuevo, esto comprobara si existe un ingrediente con ese nombre en la BD, si no existe lo crea, sino, nos respondera con la id del ingrediente ya existente. En cualquiera de los 2 casos devuelve un 201 CREATED</p>
+                            <img src="img/ingrediente/ingrediente_crear.PNG" alt=""/>                        
+                        </li>
+                        <li><b>/listar</b>
+                            <p>Esta peticion devuelve una lista con todos los ingredientes de la BD</p>
+                            <img src="img/ingrediente/listar_ingrediente.PNG" alt=""/>
+                        </li>
+                        <li><b>/leer/<span style="color:red;">nombre</span></b>
+                            <p>Con esta peticion leemos los datos de un ingrediente en concreto, nos devuelve un objeto entero</p>
+                            <img src="img/ingrediente/leer_ingrediente.PNG" alt=""/>
+                        </li>
+                        <li><b>/modificar/<span style="color:red;">nuevo_nombre</span></b>
+                            <p>Este metodo para modificar tiene que llevar en la cabecera un objeto ingrediente y luego como path param, el nuevo nombre de ingrediente </p>
+                            <img src="img/ingrediente/modificar_ingrediente.PNG" alt=""/>
+                        </li>
+                        <li><b>/borrar/<span style="color:red;">nombre</span></b>
+                            <p>Le pasamos el nombre de ingrediente a borrar como path param y ya estaria. Si es exitoso nos devolvera un 200 OK</p>
+                            <img src="img/ingrediente/borrar_ingrediente.PNG" alt=""/>
+                        </li>
+                    </ul>    
+                </ul>
+
+                <hr>
+
+                <ul>
+                    <li>
+                        <nav id="cantidades"><a><b>/cantidades</b></a></nav>
+                        <p>Estructura de datos de cantidades<p/>
+                        <table border="1px">
+                            <tr>
+                                <th>Tipo de Dato</th>
+                                <th>Nombre del Dato</th>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_ingrediente</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_receta</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>cantidad</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>unidad_medida</td>
+                            </tr>
+                        </table>
+                        <br>
+
+                        <ul>
+                            <li><b>/crear</b>
+                                <p>En esta peticion tiene que ir un objeto cantidades en la cabecera de la peticion en un JSON</p>
+                                <img src="img/cantidad/crear cantidad.PNG" alt=""/>
+                            </li>
+                            <li><b>/listar/<span style="color:red;">id_receta</span></b>
+                                <p>Lista todas las cantidades de una receta pasandole como path param la id_receta</p>
+                                <img src="img/cantidad/cantidad_listar.PNG" alt=""/>
+                            </li>
+                            <li><b>/modificar/cantidad/<span style="color:red;">nueva_cantidad</span></b></li>
+                            <li><b>/modificar/unidad/<span style="color:red;">nueva_unidad</span></b>
+                                <p>Los dos metodos funcionan de manera similar, primero se les pasa un objeto cantidad con los datos y la nueva cantidad o unidad por un path param</p>
+                                <img src="img/cantidad/mod_cantidad.PNG" alt=""/>
+                            </li>
+                            <li><b>/borrar/<span style="color:red;">id_receta</span>/<span style="color:red;">id_ingrediente</span></b>
+                                <p>En esta peticion le pasamos como path param la id_receta y la id_ingrediente para localizar la cantidad en especifico, si el borrado es exitoso nos devuelve un 200 OK, si no la encuentra un 404 NOT FOUND</p>
+                                <img src="img/cantidad/cantidad_borrar.PNG" alt=""/>
+                            </li>
+                        </ul>  
+                    </li>
+                </ul>
+
+                <hr>
+
+                <ul>
+                    <li>
+                        <nav id="valoracion"><a><b>/valoracion</b></a></nav>
+                        <p>Estructura de datos de valoracion<p/>
+                        <table border="1px">
+                            <tr>
+                                <th>Tipo de Dato</th>
+                                <th>Nombre del Dato</th>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_valoracion</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>puntuacion</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>comentario</td>
+                            </tr>
+                            <tr>
+                                <td>String</td>
+                                <td>nombre_usuario</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>id_receta</td>
+                            </tr>
+                        </table>
+                        <br>
+                    </li>
+                    <ul>
+                        <li><b>/crear</b>
+                            <p>En esta peticion tiene que ir un objeto valoracion en la cabecera de la peticion en un JSON</p>
+                            <img src="img/valoracion/valoracion_crear.PNG" alt=""/>
+                        </li>
+                        <li><b>/listar/<span style="color:red;">id_receta</span></b>
+                            <p>Para listar le metemos la id_receta de la que queremos ver las valoracion y nos devolvera un JSON con una lista, si no hay valoraciones devuelve un 404 NOT FOUND</p>
+                            <img src="img/valoracion/valoracion_listar.PNG" alt=""/>
+                        </li>
+                        <li><b>/modificar/puntuacion/<span style="color:red;">nueva_puntuacion</span></b></li>
+                        <li><b>/modificar/comentario/<span style="color:red;">nuevo_comentario</span></b>
+                            <p>Las dos formas de modificar son similares, ambas necesitan un obejto valoracion insertado en la cabecera HTTP y el dato de la nueva puntuacion o nuevo comentario ambos como path param</p>
+                            <img src="img/valoracion/valoracion_mod.PNG" alt=""/>
+                        </li>
+                        <li><b>/borrar/<span style="color:red;">id_comentario</span></b>
+                            <p>Le pasamos como path param la id del comentario, si el borrado es exitoso devolvera un 200 OK, si no lo es, devolvera un 404 NOT FOUND</p>
+                            <img src="img/valoracion/valoracion_borrar.PNG" alt=""/>
+                        </li>
+                    </ul>    
+                </ul>
+
+
+
+            </section>
+
+            <hr>
+
+            <section id ="uso">
+                <h2>Ejemplos de uso</h2>
+                <h3>Peticiones a la app con CURL</h3>
+                <p>Los ejemplos son realizados en localhost, una opcion para hacer pruebas es usar NGROK que te proporciona un tunel HTTPS que simula tu localhost para poder realizar pruebas desde fuera de la red</p>
+                <p>Voy a realizar unas peticiones con el comando CURL desde el terminal para crear un usuario y luego logear con el en la app</p>
+                <p><b>curl -X POST -H "Content-Type: application/json" -d @C:\Users\lopez\Desktop\scripts\suario.json http://localhost:8080/sabores_secretos/servicios/usuario/crear</b></p>
+                <ul>
+                    <li>Como esta peticion solicita un JSON con un objeto usuario, le indico donde encontrarlo en mi ordenador con esta parte del comando <b>-H "Content-Type: application/json" -d @C:\Users\lopez\Desktop\scripts\suario.json</b><br>
+                        Lo que hay dentro del JSON es un objeto USUARIO con la estructura que se puede ver en la tabla de tipo de datos <a href="#usuario">usuario</a> (el atributo actividad no es necesario porque la BD le va a dar un valor predeterminado)
+                    </li>
+                    <li>El siguiente parametro del comando es la ruta para acceder a la peticion <b>-d @C:\Users\lopez\Desktop\scripts\suario.json http://localhost:8080/sabores_secretos/servicios/usuario/crear</b></li>
+                    <br>
+                    <img src="img/ejemplo/curl_create.PNG" alt=""/>
+                    <li>La peticion nos devuelve la id de usuario creado</li>
+                </ul>
+                <p>Vale ahora vamos a ver como funcina la peticion <b>login</b></p>
+                <p><b>curl -XGET http://localhost:8080/sabores_secretos/servicios/usuario/login/<span style="color:red;">usuarioPrueba</span>/<span style="color:red;">passPrueba</span></b></p>
+                <ul>
+                    <li>Como podemos ver ahora simplemente ponemos el comando, el tipo de peticion que queremos hacer y la url de la peticion con los path params al final</li>
+                    <li>Las 2 primeras peticiones son con el usuario y la contraseña la primera es exitsa(devuelve true) y la segunda es fallida (devuelve false)</li>
+                    <li>En la tercera logeo en vez de con el usuario, con el correo electronico</li>
+                    <br>
+                    <img src="img/ejemplo/curl_login.PNG" alt=""/>
+                </ul>
+
+                <br>
+                <p>Esto ha sido una pequeña demostracion de todas las funcionalidades de la api, con practicamente todas las peticiones se actua de una forma similar a la de estos dos objetos</p>
+                <br>
+                
+            </section>
+
+            <hr>
+
+            <section id ="seguridad">
+                <h2>Seguridad</h2>
+                <p>Respecto a la seguridad no hay ningun tipo de validacion de datos en la api es un objetivo a mejorar para siguientes versiones</p>
+            </section>
+            
+            <hr>
+            <p>©SishaSocial team</p>
+
+
+
+
+
+        </main>
+    </body>
+</html>
